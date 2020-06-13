@@ -1,19 +1,15 @@
 package merge
 
 import (
-	"math/rand"
 	"sort"
 	"testing"
-	"time"
+
+	s "github.com/fsmiamoto/arugorizumu/sort"
 )
 
-const SliceLength = 500000
-
 func TestSort(t *testing.T) {
-	rand.Seed(time.Now().UnixNano())
-
 	for i := 0; i < 10; i++ {
-		slice := rand.Perm(SliceLength)
+		slice := s.RandomInts(s.SliceLength, s.MaxInt)
 		Sort(slice)
 		if !sort.IntsAreSorted(slice) {
 			t.Errorf("Expected the slice to be sorted")
@@ -22,7 +18,7 @@ func TestSort(t *testing.T) {
 }
 
 func BenchmarkSort(b *testing.B) {
-	slice := rand.Perm(SliceLength)
+	slice := s.RandomInts(s.SliceLength, s.MaxInt)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		Sort(slice)
